@@ -11,11 +11,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Scalar;
 import org.opencv.videoio.VideoCapture;
 import java.io.IOException;
+import java.util.HashMap;
 
 
 public class RecognitionControl {
@@ -53,6 +55,8 @@ public class RecognitionControl {
     //Cube Build
     byte[] cubeColors;
     Color[][] rubiksCube = new Color[6][9];
+    private HashMap<Byte,Color> intToColor;
+
 
     private String[] stages = {
       "Put any face of the cube to the camera.",
@@ -67,6 +71,22 @@ public class RecognitionControl {
     static{ System.loadLibrary(Core.NATIVE_LIBRARY_NAME); }
 
     public void initialize(){
+        for(int i = 0; i<6;i++){
+            for(int j = 0;j<9;j++)
+                rubiksCube[i][j] = Color.WHITE;
+        }
+
+
+        intToColor = new HashMap<>();
+
+        intToColor.put((byte)1,Color.RED);
+        intToColor.put((byte)2,Color.GREEN);
+        intToColor.put((byte)3,Color.BLUE);
+        intToColor.put((byte)4,Color.ORANGE);
+        intToColor.put((byte)5,Color.YELLOW);
+        intToColor.put((byte)6,Color.WHITE);
+
+
         initializePopups();
         imageProc = new ImageProc();
         threshold.valueProperty().addListener((observable, oldValue, newValue) -> {
@@ -92,18 +112,20 @@ public class RecognitionControl {
         closeButton.setOnAction(event -> popup.hide());
 
         goodCapture.setOnAction(event -> {
+            setCubeLayer();
+            instruction++;
+
+
             retakeCapture.setDisable(true);
             goodCapture.setDisable(true);
-            cubeFound = false;
-
-            for(int i =0; i<9;i++){
-
-            }
-
-            instruction++;
-            if(instruction==6)
+            if(instruction==6){
+                stopCamera();
+                popup.hide();
                 instruction=0;
+            }
+            cubeFound = false;
             instructions.setText(stages[instruction]);
+
         });
 
         retakeCapture.setOnAction(event -> {
@@ -141,12 +163,6 @@ public class RecognitionControl {
         daemeonThread.runnable = false;
         startButton.setText("Start Camera");
         cameraActive = false;
-        capture.release();
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         capture.release();
         resetImages();
     }
@@ -285,6 +301,13 @@ public class RecognitionControl {
     }
 
     public void setPopup(Popup popup){this.popup = popup;}
+
+    private void setCubeLayer(){
+        for(int i = 0; i<9;i++){
+            Color c = intToColor.get(cubeColors[i]);
+            rubiksCube[instruction][i] = c;
+        }
+    }
 
     class DaemeonThread implements Runnable{
         volatile boolean runnable = false;
