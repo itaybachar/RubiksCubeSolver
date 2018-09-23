@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane fx:controller="mainController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400" minWidth="600" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+    <center>
+        <Pane fx:id="scene3D" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: red;" BorderPane.alignment="CENTER" />
+    </center>
+
+    <top>
+        <MenuBar BorderPane.alignment="CENTER">
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Close" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Delete" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="About" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </top>
+
+    <bottom>
+        <AnchorPane prefHeight="37.0" prefWidth="600.0" style="-fx-background-color: gray;" BorderPane.alignment="CENTER" />
+    </bottom>
+
+    <right>
+        <VBox prefHeight="3000.0" prefWidth="100.0">
+
+                <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="5" >
+                        <Button fx:id="solveCube" prefHeight="10" prefWidth="80" text="Solve"/>
+                        <Button fx:id="shuffleCube" prefHeight="10" prefWidth="80" text="Shuffle" />
+                        <Button fx:id="scanCube" prefHeight="10" prefWidth="80" text="Scan Cube"/>
+                    <padding>
+                        <Insets bottom="5" left="5" right="5" top="5" />
+                    </padding>
+                </VBox>
+                <VBox alignment="BOTTOM_CENTER" prefHeight="3000.0" prefWidth="100.0" spacing="5" >
+                    <children>
+                        <HBox prefHeight="20.0" prefWidth="100.0" spacing="5" >
+                                <Button fx:id="prevStep" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" prefHeight="10" prefWidth="40" style="-fx-background-size: contain;">
+                                    <graphic>
+                                        <ImageView fitHeight="20" fitWidth="400.0" preserveRatio="true">
+                                            <image>
+                                                <Image url="/resources/prevButton.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                </Button>
+
+                                <Button fx:id="nextStep" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" prefHeight="10" prefWidth="40" style="-fx-background-size: contain;">
+                                    <graphic>
+                                        <ImageView fitHeight="20" fitWidth="400.0" preserveRatio="true">
+                                            <image>
+                                                <Image url="/resources/nextButton.png"/>
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                </Button>
+                        </HBox>
+                        <HBox prefHeight="20.0" prefWidth="100.0" spacing="5" >
+                            <children>
+                                <Button fx:id="undo" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" prefHeight="10" prefWidth="40" style="-fx-background-size: contain;">
+                                    <graphic>
+                                        <ImageView fitHeight="20" fitWidth="400.0" preserveRatio="true">
+                                            <image>
+                                                <Image url="/resources/prevButton.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                </Button>
+                                <Button fx:id="redo" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" prefHeight="10" prefWidth="40" style="-fx-background-size: contain;">
+                                    <graphic>
+                                        <ImageView fitHeight="20" fitWidth="400.0" preserveRatio="true">
+                                            <image>
+                                                <Image url="/resources/nextButton.png"/>
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                </Button>
+                            </children>
+                        </HBox>
+                    </children>
+                    <padding>
+                        <Insets bottom="5" left="5" right="5" top="5" />
+                    </padding>
+                </VBox>
+        </VBox>
+    </right>
+</BorderPane>
