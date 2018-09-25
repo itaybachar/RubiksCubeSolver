@@ -45,9 +45,28 @@ public class mainController {
         }
         recognitionControl = loader.getController();
         recognitionControl.setPopup(recognition);
+
+        inputHandler();
+    }
+
+    private void inputHandler(){
         scanCube.setOnAction(event ->{
             recognitionControl.setStage(this.stage);
             recognition.show(stage);
+        });
+
+        solveCube.setOnAction(event -> {
+            cubeSolver.solveCube();
+        });
+
+        shuffleCube.setOnAction(event -> {
+            cubeSolver.shuffleCube(30);
+        });
+
+        recognition.setOnHidden(event -> {
+            if(recognitionControl.isCubeFound()){
+                rubiksCube.setRubiksCube(recognitionControl.getRubiksCube());
+            }
         });
     }
 

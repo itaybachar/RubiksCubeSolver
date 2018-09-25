@@ -58,6 +58,15 @@ public class RubiksCube {
         setScene();
     }
 
+    public void setRubiksCube(Color[][] cube) {
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 9; j++) {
+                sticker[i][j].setColor(cube[i][j]);
+            }
+        }
+        updateCube();
+    }
+
     private void setScene(){
         label.setTranslateY( -100);
         label.setTranslateX(-80);
@@ -827,6 +836,10 @@ public class RubiksCube {
         currentLayer.setLayer(this.sticker);
         currentLayer.chooseMove(layerColor,rotationType,moveType);
         sticker = currentLayer.getSticker();
+        updateCube();
+    }
+
+    private void updateCube(){
         rubiksCube.getChildren().clear();
         rubiksCube.getChildren().add(emptyCube.getCube());
         for (int i = 0; i < 6; i++) {

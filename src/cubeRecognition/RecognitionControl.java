@@ -54,6 +54,7 @@ public class RecognitionControl {
 
     //Cube Build
     byte[] cubeColors;
+
     Color[][] rubiksCube = new Color[6][9];
     private HashMap<Byte,Color> intToColor;
 
@@ -109,7 +110,10 @@ public class RecognitionControl {
 
         });
 
-        closeButton.setOnAction(event -> popup.hide());
+        closeButton.setOnAction(event -> {
+            this.cubeFound = false;
+            popup.hide();
+        });
 
         goodCapture.setOnAction(event -> {
             setCubeLayer();
@@ -122,10 +126,9 @@ public class RecognitionControl {
                 stopCamera();
                 popup.hide();
                 instruction=0;
-            }
-            cubeFound = false;
-            instructions.setText(stages[instruction]);
+            }else cubeFound = false;
 
+            instructions.setText(stages[instruction]);
         });
 
         retakeCapture.setOnAction(event -> {
@@ -302,11 +305,19 @@ public class RecognitionControl {
 
     public void setPopup(Popup popup){this.popup = popup;}
 
+    public Color[][] getRubiksCube() {
+        return rubiksCube;
+    }
+
     private void setCubeLayer(){
         for(int i = 0; i<9;i++){
             Color c = intToColor.get(cubeColors[i]);
             rubiksCube[instruction][i] = c;
         }
+    }
+
+    public boolean isCubeFound() {
+        return cubeFound;
     }
 
     class DaemeonThread implements Runnable{
