@@ -1,3 +1,5 @@
+import cube.CubeSolver;
+import cube.RubiksCube;
 import cubeRecognition.RecognitionControl;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +14,8 @@ public class mainController {
     //Rubik's Cube Scene
     @FXML
     private Pane scene3D;
+    private RubiksCube rubiksCube;
+    private CubeSolver cubeSolver;
 
     //Option Controls
     @FXML
@@ -23,6 +27,15 @@ public class mainController {
     private RecognitionControl recognitionControl;
 
     public void initialize(){
+        //Set up Rubik's cube
+        rubiksCube = new RubiksCube(20);
+        rubiksCube.getScene().heightProperty().bind(scene3D.heightProperty());
+        rubiksCube.getScene().widthProperty().bind(scene3D.widthProperty());
+        scene3D.getChildren().add(rubiksCube.getScene());
+
+        //Set up solver
+        cubeSolver = new CubeSolver(this.rubiksCube);
+
         recognition = new Popup();
         FXMLLoader loader = new FXMLLoader(main.class.getResource("FXML_layouts\\RecognitionScreen.fxml"));
         System.out.println();
