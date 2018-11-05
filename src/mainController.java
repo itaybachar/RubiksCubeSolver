@@ -68,6 +68,11 @@ public class mainController {
                 rubiksCube.setRubiksCube(recognitionControl.getRubiksCube());
             }
         });
+
+        nextStep.setOnAction(actionEvent -> {
+            //getNextMove();
+            //rubiksCube.doMove(cubeSolver);
+        });
     }
 
 

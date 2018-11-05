@@ -14,9 +14,7 @@ public class CubeSolver {
     //Solve
     private Layer currentLayer = new Layer();
     private Sticker[][] tempRubiksCube = new Sticker[6][9];
-    LinkedList<MoveType> solutionMoves = new LinkedList<>();
-    LinkedList<RotationType> solutionMovesRotation = new LinkedList<>();
-    LinkedList<Integer> solutionLayerNumber = new LinkedList<>();
+    private SolutionSet solutionSet = new SolutionSet();
 
     public CubeSolver(RubiksCube rubiksCube) {
         this.rubiksCube = rubiksCube;
@@ -74,7 +72,7 @@ public class CubeSolver {
         } while(!isCubeSolved());
         rubiksCube.label.setText("Number of moves to solve: " + solutionMoves.size());
         //send move set to main cube
-        rubiksCube.doMoves(solutionMoves, solutionMovesRotation, solutionLayerNumber);
+        //rubiksCube.doMoves(solutionMoves, solutionMovesRotation, solutionLayerNumber);
     }
 
     private void FirstCross() {
