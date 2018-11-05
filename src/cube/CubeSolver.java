@@ -56,9 +56,7 @@ public class CubeSolver {
         }
         //</editor-fold>
 
-        solutionMoves.clear();
-        solutionMovesRotation.clear();
-        solutionLayerNumber.clear();
+        solutionSet.resetSet();
 
         do {
             FirstCross();
@@ -70,9 +68,9 @@ public class CubeSolver {
             PLL();
             lineUpCube();
         } while(!isCubeSolved());
-        rubiksCube.label.setText("Number of moves to solve: " + solutionMoves.size());
+        rubiksCube.label.setText("Number of moves to solve: " + solutionSet.getSolutionMoves().size());
         //send move set to main cube
-        //rubiksCube.doMoves(solutionMoves, solutionMovesRotation, solutionLayerNumber);
+        rubiksCube.doMoves(solutionSet.getSolutionMoves(), solutionSet.getSolutionMovesRotation(), solutionSet.getSolutionLayerNumber());
     }
 
     private void FirstCross() {
@@ -902,10 +900,6 @@ public class CubeSolver {
         for (int i = 0; i < timesToAdd; i++) {
             System.out.println(moveType.toString() + " " + rotationType.toString());
 
-            solutionMoves.add(moveType);
-            solutionMovesRotation.add(rotationType);
-            solutionLayerNumber.add(layerNum);
-
             LayerColor layerColor = null;
             //<editor-fold desc="Layer Number Switch">
 
@@ -934,6 +928,9 @@ public class CubeSolver {
 
             }
             //</editor-fold>
+
+            solutionSet.addMove(moveType,rotationType,layerNum,layerColor);
+
             rotateLayer(moveType,layerColor,rotationType);
         }
 

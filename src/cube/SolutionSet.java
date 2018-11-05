@@ -8,7 +8,7 @@ public class SolutionSet {
     private LinkedList<MoveType> solutionMoves;
     private LinkedList<RotationType> solutionMovesRotation;
     private LinkedList<Integer> solutionLayerNumber;
-    private LinkedList<Color> solutionMoveLayerColor;
+    private LinkedList<LayerColor> solutionMoveLayerColor;
 
     public SolutionSet(){
         solutionMoves = new LinkedList<>();
@@ -17,7 +17,7 @@ public class SolutionSet {
         solutionMoveLayerColor = new LinkedList<>();
     }
 
-    private void addMove(MoveType moveType, RotationType rotationType, Integer layerNum, Color layerColor){
+    public void addMove(MoveType moveType, RotationType rotationType, Integer layerNum, LayerColor layerColor){
         solutionMoves.add(moveType);
         solutionMovesRotation.add(rotationType);
         solutionLayerNumber.add(layerNum);
@@ -43,7 +43,7 @@ public class SolutionSet {
         return solutionLayerNumber;
     }
 
-    public LinkedList<Color> getSolutionMoveLayerColor() {
+    public LinkedList<LayerColor> getSolutionMoveLayerColor() {
         return solutionMoveLayerColor;
     }
 }
