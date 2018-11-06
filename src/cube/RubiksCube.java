@@ -42,7 +42,7 @@ public class RubiksCube {
     boolean onCube = false;
 
     //Animation
-    double cubeAnimationSpeed = 0.1;
+    private double cubeAnimationSpeed = 0.1;
     
     public RubiksCube(double pieceSize) {
         emptyCube = new EmptyCube(pieceSize);
@@ -56,6 +56,10 @@ public class RubiksCube {
         placeStickers();
 
         setScene();
+    }
+
+    public void setCubeAnimationSpeed(double cubeAnimationSpeed) {
+        this.cubeAnimationSpeed = cubeAnimationSpeed;
     }
 
     public void setRubiksCube(Color[][] cube) {

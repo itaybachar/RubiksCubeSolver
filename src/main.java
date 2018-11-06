@@ -1,3 +1,4 @@
+import cube.LayerColor;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

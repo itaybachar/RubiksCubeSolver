@@ -70,7 +70,11 @@ public class CubeSolver {
         } while(!isCubeSolved());
         rubiksCube.label.setText("Number of moves to solve: " + solutionSet.getSolutionMoves().size());
         //send move set to main cube
-        rubiksCube.doMoves(solutionSet.getSolutionMoves(), solutionSet.getSolutionMovesRotation(), solutionSet.getSolutionLayerNumber());
+        //rubiksCube.doMoves(solutionSet.getSolutionMoves(), solutionSet.getSolutionMovesRotation(), solutionSet.getSolutionLayerNumber());
+    }
+
+    public SolutionSet getSolutionSet(){
+        return solutionSet;
     }
 
     private void FirstCross() {
@@ -898,30 +902,30 @@ public class CubeSolver {
 
     private void solutionMovesAdd(MoveType moveType, RotationType rotationType, int layerNum, int timesToAdd){ // will add moves to list and apply on temp cube
         for (int i = 0; i < timesToAdd; i++) {
-            System.out.println(moveType.toString() + " " + rotationType.toString());
+            //System.out.println(moveType.toString() + " " + rotationType.toString());
 
-            LayerColor layerColor = null;
-            //<editor-fold desc="Layer Number Switch">
+            LayerColor permColor = null;
+            LayerColor currentColor = null;
 
             //<editor-fold desc="Layer Number Switch">
             switch (layerNum) {
                 case 0:
-                    layerColor = LayerColor.Red;
+                    permColor = LayerColor.Red;
                     break;
                 case 1:
-                    layerColor = LayerColor.Green;
+                    permColor = LayerColor.Green;
                     break;
                 case 2:
-                    layerColor = LayerColor.Orange;
+                    permColor = LayerColor.Orange;
                     break;
                 case 3:
-                    layerColor = LayerColor.Blue;
+                    permColor = LayerColor.Blue;
                     break;
                 case 4:
-                    layerColor = LayerColor.Yellow;
+                    permColor = LayerColor.Yellow;
                     break;
                 case 5:
-                    layerColor = LayerColor.White;
+                    permColor = LayerColor.White;
                     break;
                 default:
                     break;
@@ -929,9 +933,23 @@ public class CubeSolver {
             }
             //</editor-fold>
 
-            solutionSet.addMove(moveType,rotationType,layerNum,layerColor);
+            if(tempRubiksCube[layerNum][4].getColor() == Color.WHITE){
+                currentColor = LayerColor.White;
+            }else if(tempRubiksCube[layerNum][4].getColor() == Color.YELLOW){
+                currentColor = LayerColor.Yellow;
+            }else if(tempRubiksCube[layerNum][4].getColor() == Color.RED){
+                currentColor = LayerColor.Red;
+            }else if(tempRubiksCube[layerNum][4].getColor() == Color.ORANGE){
+                currentColor = LayerColor.Orange;
+            }else if(tempRubiksCube[layerNum][4].getColor() == Color.BLUE){
+                currentColor = LayerColor.Blue;
+            }else if(tempRubiksCube[layerNum][4].getColor() == Color.GREEN){
+                currentColor = LayerColor.Green;
+            }
 
-            rotateLayer(moveType,layerColor,rotationType);
+            solutionSet.addMove(moveType,rotationType,layerNum,currentColor);
+
+            rotateLayer(moveType,permColor,rotationType);
         }
 
     }

@@ -1,9 +1,15 @@
 import cube.CubeSolver;
+import cube.RotationType;
 import cube.RubiksCube;
+import cube.SolutionMove;
 import cubeRecognition.RecognitionControl;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.Pane;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
@@ -20,6 +26,10 @@ public class mainController {
     //Option Controls
     @FXML
     private Button solveCube, shuffleCube, scanCube, prevStep, nextStep, undo, redo;
+    @FXML
+    private Label moveInstruction;
+    @FXML
+    private Slider animationSpeed;
 
     //Environmental Variables
     private Stage stage;
@@ -57,6 +67,7 @@ public class mainController {
 
         solveCube.setOnAction(event -> {
             cubeSolver.solveCube();
+            nextStep.setDisable(false);
         });
 
         shuffleCube.setOnAction(event -> {
@@ -70,8 +81,39 @@ public class mainController {
         });
 
         nextStep.setOnAction(actionEvent -> {
-            //getNextMove();
-            //rubiksCube.doMove(cubeSolver);
+            SolutionMove solutionMove = cubeSolver.getSolutionSet().getNextMove();
+            if (solutionMove != null){
+                prevStep.setDisable(false);
+                moveInstruction.setText("Do " + solutionMove.getMoveType() + " " + solutionMove.getRotationType() + " On the " + solutionMove.getLayerColor() + " layer.");
+                rubiksCube.doMove(solutionMove.getMoveType(), solutionMove.getLayerNum(), solutionMove.getRotationType());
+            }
+
+            if(!cubeSolver.getSolutionSet().hasNext())
+                nextStep.setDisable(true);
+
+            if(cubeSolver.getSolutionSet().hasPrev())
+                prevStep.setDisable(false);
+        });
+
+        prevStep.setOnAction(actionEvent -> {
+            SolutionMove solutionMove = cubeSolver.getSolutionSet().getPreviousMove();
+            if (solutionMove != null) {
+                solutionMove.flipRotation();
+                moveInstruction.setText("Do " + solutionMove.getMoveType() + " " + solutionMove.getRotationType() + " On the " + solutionMove.getLayerColor() + " layer.");
+                rubiksCube.doMove(solutionMove.getMoveType(), solutionMove.getLayerNum(), solutionMove.getRotationType());
+                solutionMove.flipRotation();
+            }
+
+            if(!cubeSolver.getSolutionSet().hasPrev())
+                prevStep.setDisable(true);
+
+            if(cubeSolver.getSolutionSet().hasNext())
+                nextStep.setDisable(false);
+        });
+
+        animationSpeed.valueProperty().addListener((observableValue, number, t1) ->{
+            rubiksCube.setCubeAnimationSpeed(number.floatValue());
+            System.out.println(number.floatValue());
         });
     }
 

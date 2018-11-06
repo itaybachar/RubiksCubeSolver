@@ -5,45 +5,47 @@ import javafx.scene.paint.Color;
 import java.util.LinkedList;
 
 public class SolutionSet {
-    private LinkedList<MoveType> solutionMoves;
-    private LinkedList<RotationType> solutionMovesRotation;
-    private LinkedList<Integer> solutionLayerNumber;
-    private LinkedList<LayerColor> solutionMoveLayerColor;
+    private LinkedList<SolutionMove> solutionMoves;
+    private int iterator;
 
     public SolutionSet(){
         solutionMoves = new LinkedList<>();
-        solutionMovesRotation = new LinkedList<>();
-        solutionLayerNumber = new LinkedList<>();
-        solutionMoveLayerColor = new LinkedList<>();
+        iterator = 0;
     }
 
     public void addMove(MoveType moveType, RotationType rotationType, Integer layerNum, LayerColor layerColor){
-        solutionMoves.add(moveType);
-        solutionMovesRotation.add(rotationType);
-        solutionLayerNumber.add(layerNum);
-        solutionMoveLayerColor.add(layerColor);
+        solutionMoves.add(new SolutionMove(moveType,rotationType,layerNum,layerColor));
     }
 
     public void resetSet(){
         solutionMoves.clear();
-        solutionMovesRotation.clear();
-        solutionLayerNumber.clear();
-        solutionMoveLayerColor.clear();
+        iterator = 0;
     }
 
-    public LinkedList<MoveType> getSolutionMoves() {
+    public SolutionMove getNextMove() {
+        if (hasNext()) {
+            iterator++;
+            return solutionMoves.get(iterator - 1);
+        } else return null;
+    }
+
+    public SolutionMove getPreviousMove() {
+        if (hasPrev()) {
+            iterator--;
+            return solutionMoves.get(iterator);
+        } else return null;
+    }
+
+
+    public LinkedList<SolutionMove> getSolutionMoves() {
         return solutionMoves;
     }
 
-    public LinkedList<RotationType> getSolutionMovesRotation() {
-        return solutionMovesRotation;
+    public boolean hasNext(){
+        return (iterator < solutionMoves.size() && solutionMoves.size() != 0);
     }
 
-    public LinkedList<Integer> getSolutionLayerNumber() {
-        return solutionLayerNumber;
-    }
-
-    public LinkedList<LayerColor> getSolutionMoveLayerColor() {
-        return solutionMoveLayerColor;
+    public boolean hasPrev(){
+        return iterator > 0;
     }
 }
