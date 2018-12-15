@@ -47,7 +47,7 @@ public class RecognitionControl {
     //Camera Controls
     private VideoCapture capture;
     private boolean cameraActive;
-    private int cameraID =0; //-1 gives a device choosing dialog
+    private int cameraID =-1; //-1 gives a device choosing dialog
     private Mat rawMat, filteredMat,foundMat;
     DaemeonThread daemeonThread;
     boolean cubeFound = false;

@@ -1,10 +1,7 @@
 import cube.CubeSolver;
-import cube.RotationType;
 import cube.RubiksCube;
 import cube.SolutionMove;
 import cubeRecognition.RecognitionControl;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -25,7 +22,7 @@ public class mainController {
 
     //Option Controls
     @FXML
-    private Button solveCube, shuffleCube, scanCube, prevStep, nextStep, undo, redo;
+    private Button getSolution, shuffleCube, scanCube, prevStep, nextStep,solveCube;
     @FXML
     private Label moveInstruction;
     @FXML
@@ -65,13 +62,16 @@ public class mainController {
             recognition.show(stage);
         });
 
-        solveCube.setOnAction(event -> {
+        getSolution.setOnAction(event -> {
             cubeSolver.solveCube();
+            prevStep.setDisable(true);
+            solveCube.setDisable(false);
             nextStep.setDisable(false);
         });
 
         shuffleCube.setOnAction(event -> {
             cubeSolver.shuffleCube(30);
+            cubeSolver.getSolutionSet().resetSet();
         });
 
         recognition.setOnHidden(event -> {
@@ -88,9 +88,10 @@ public class mainController {
                 rubiksCube.doMove(solutionMove.getMoveType(), solutionMove.getLayerNum(), solutionMove.getRotationType());
             }
 
-            if(!cubeSolver.getSolutionSet().hasNext())
+            if(!cubeSolver.getSolutionSet().hasNext()) {
                 nextStep.setDisable(true);
-
+                solveCube.setDisable(true);
+            }
             if(cubeSolver.getSolutionSet().hasPrev())
                 prevStep.setDisable(false);
         });
@@ -107,14 +108,20 @@ public class mainController {
             if(!cubeSolver.getSolutionSet().hasPrev())
                 prevStep.setDisable(true);
 
-            if(cubeSolver.getSolutionSet().hasNext())
+            if(cubeSolver.getSolutionSet().hasNext()) {
                 nextStep.setDisable(false);
+                solveCube.setDisable(false);
+            }
         });
 
-        animationSpeed.valueProperty().addListener((observableValue, number, t1) ->{
-            rubiksCube.setCubeAnimationSpeed(number.floatValue());
-            System.out.println(number.floatValue());
+        solveCube.setOnAction(actionEvent -> {
+            rubiksCube.doMoves(cubeSolver.getSolutionSet());
+            nextStep.setDisable(true);
+            solveCube.setDisable(true);
+            prevStep.setDisable(false);
         });
+
+        animationSpeed.valueProperty().addListener((observableValue, number, t1) -> rubiksCube.setCubeAnimationSpeed(number.floatValue()));
     }
 
 

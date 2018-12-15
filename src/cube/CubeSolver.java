@@ -46,6 +46,10 @@ public class CubeSolver {
         rubiksCube.doMoves(shuffledMoves, shuffledMovesDirection, layerNum);
     }
 
+    public void playSolve(){
+     //   rubiksCube.doMoves(shuffledMoves, shuffledMovesDirection, layerNum);
+    }
+
     public void solveCube() {
 
         //<editor-fold desc="Set Color of temp cube">
@@ -68,9 +72,6 @@ public class CubeSolver {
             PLL();
             lineUpCube();
         } while(!isCubeSolved());
-        rubiksCube.label.setText("Number of moves to solve: " + solutionSet.getSolutionMoves().size());
-        //send move set to main cube
-        //rubiksCube.doMoves(solutionSet.getSolutionMoves(), solutionSet.getSolutionMovesRotation(), solutionSet.getSolutionLayerNumber());
     }
 
     public SolutionSet getSolutionSet(){

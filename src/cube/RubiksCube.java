@@ -836,7 +836,6 @@ public class RubiksCube {
     }
 
     public void rotateLayer(MoveType moveType, LayerColor layerColor, RotationType rotationType) {
-        //todo: set the layer
         currentLayer.setLayer(this.sticker);
         currentLayer.chooseMove(layerColor,rotationType,moveType);
         sticker = currentLayer.getSticker();
@@ -2064,6 +2063,22 @@ public class RubiksCube {
         this.moves = moves;
         this.movesDirection = movesDirection;
         this.layerNumber = layerNumber;
+        moveSequence = true;
+        sequenceIndex = 0;
+        nextMoveInSequence();
+    }
+
+    public void doMoves(SolutionSet solutionSet) {
+        this.moves = new LinkedList<>();
+        this.movesDirection = new LinkedList<>();
+        this.layerNumber = new LinkedList<>();
+
+        while(solutionSet.hasNext()){
+            SolutionMove solutionMove = solutionSet.getNextMove();
+            this.moves.add(solutionMove.getMoveType());
+            this.movesDirection.add(solutionMove.getRotationType());
+            this.layerNumber.add(solutionMove.getLayerNum());
+        }
         moveSequence = true;
         sequenceIndex = 0;
         nextMoveInSequence();

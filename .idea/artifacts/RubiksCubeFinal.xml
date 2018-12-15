@@ -15,6 +15,8 @@
       <element id="archive" name="RubiksCubeFinal.jar">
         <element id="module-output" name="RubiksCubeFinal" />
       </element>
+      <element id="library" level="project" name="JavaFX" />
+      <element id="library" level="project" name="x64" />
     </root>
   </artifact>
 </component>
