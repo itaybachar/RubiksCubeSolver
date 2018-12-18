@@ -66,6 +66,11 @@
                   <VBox.margin>
                      <Insets top="10.0" />
                   </VBox.margin></Button>
+                        <Button fx:id="full" text="Full Screen">
+                            <VBox.margin>
+                                <Insets top="10.0" />
+                            </VBox.margin></Button>
+
                     </children>
                     <padding>
                         <Insets bottom="5" left="5" right="5" top="5" />
@@ -75,6 +80,7 @@
                     <Label alignment="CENTER" text="Animation Speed" />
                     <Slider fx:id="animationSpeed" max="1" value="0.1" />
                 </VBox>
+
         </VBox>
     </right>
 </BorderPane>

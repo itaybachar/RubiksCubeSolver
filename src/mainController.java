@@ -22,7 +22,7 @@ public class mainController {
 
     //Option Controls
     @FXML
-    private Button getSolution, shuffleCube, scanCube, prevStep, nextStep,solveCube;
+    private Button getSolution, shuffleCube, scanCube, prevStep, nextStep,solveCube,full;
     @FXML
     private Label moveInstruction;
     @FXML
@@ -57,6 +57,9 @@ public class mainController {
     }
 
     private void inputHandler(){
+        full.setOnAction(actionEvent -> {
+            stage.setFullScreen(true);
+        });
         scanCube.setOnAction(event ->{
             recognitionControl.setStage(this.stage);
             recognition.show(stage);
